@@ -8,33 +8,38 @@ const Context = React.createContext()
 const ContextProvider = ({children}) => {
 
     const [showSearchBar, setShowSearchBar] = useState(false);
-    const [hotels, setHotels] = useState([])
+    // const [hotels, setHotels] = useState([])
     const [adultCount, setAdultCount] = useState(0);
     const [childCount, setChildCount] = useState(0);
     const [showLocation, setShowLocation] = useState(false)
     const [query, setQuery] = useState('')
-    const [city, setCity]  = useState(hotels);
-   
-   
+    const [city, setCity]  = useState([]);
+
+
+    //adds the umber of children and adults
+    let sum = adultCount + childCount;
+   const userInput =(e)=>{
+        setQuery(e.target.value)
+       
+    }
+
     const handleSubmit =(event)=>{
         event.preventDefault()
-        const selectedHotels = hotels.filter(hotel => hotel.city.toLowerCase() === query.toLowerCase());
-        setCity(selectedHotels)  
-        setTimeout(()=>{
-        // setHotels(city) 
-        setShowSearchBar(false)
-        }, 200)
-        setQuery('')
-        sum =0;
-    }
-   
-
-   //adds the umber of children and adults
-    let sum = adultCount + childCount;
-   
-    const userInput =(e)=>{
-        setQuery(e.target.value)
-    }
+        if(query.length > 0){
+            const selectedHotels = city.filter(hotel => hotel.city.toLowerCase() === query.toLowerCase())
+            setCity(selectedHotels)
+             setTimeout(()=>{
+                setShowSearchBar(false)
+             }, 200)
+               sum =0; 
+        }else{
+         setCity(locations)
+          setTimeout(()=>{
+                setShowSearchBar(false)  
+             }, 200)
+               sum =0;
+        }           
+    }      
 
     const showLocationBar=()=>{
         setShowLocation(!showLocation)
@@ -67,7 +72,7 @@ const ContextProvider = ({children}) => {
     }
 
      useEffect(()=>{
-         setHotels(locations)
+         setCity(locations)
      },[])
 
   
@@ -81,8 +86,7 @@ const ContextProvider = ({children}) => {
     }
    
     return (
-        <Context.Provider value={{show:showSearchBar,handleShowBar,
-         hotels:hotels,handleHideShowSearchBar,
+        <Context.Provider value={{show:showSearchBar,handleShowBar,handleHideShowSearchBar,
          adultCount,increaseAdult, decreaseAdult,
          decreaseChildren, increaseChildren, childCount, sum, city,showLocation, showLocationBar, userInput,
          handleSubmit

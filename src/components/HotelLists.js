@@ -5,11 +5,11 @@ import StarIcon from '@material-ui/icons/Star';
 
 const HotelLists = () => {
 
-    const {hotels} = useContext(Context)
+    const {city} = useContext(Context)
      
     return (
         <div className="card-lists">
-          {hotels.map(hotel =>{
+          {city.map(hotel =>{
               return (
                   
                   <div className="card" key={hotel.id}>

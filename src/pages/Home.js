@@ -8,7 +8,7 @@ import {Context} from  '../Context'
 
 const Home = () => {
 
-    const {hotels} = useContext(Context)
+    const {city} = useContext(Context)
 
     return (
         <div>
@@ -18,7 +18,7 @@ const Home = () => {
                <div className="main">
             <div className="displays">
                 <h2>Stays in Finland</h2> 
-                <p>{hotels.length} Stays</p>
+                <p>{city.length} Stays</p>
             </div>
                 <HotelLists/>
                </div>
